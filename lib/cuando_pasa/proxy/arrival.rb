@@ -36,6 +36,7 @@ module CuandoPasa::Proxy
           { line_bus_id: line_bus_id, message: message }
         end # TODO: rescue KeyError.
 
+        # TODO: Understand what is the query actually returning.
         arrivals.reject do |arrival|
           arrival[:line_bus_id].nil? || arrival[:message].nil?
         end
