@@ -32,5 +32,10 @@ module CuandoPasa::Proxy
       SessionCookie::Provider.new.provide
       assert_equal 1, db.all("session_cookies").to_a.size
     end
+
+    def test_stop_storage
+      Stop.update_db
+      assert DB.get.all("stops").to_a.size > 0
+    end
   end
 end
