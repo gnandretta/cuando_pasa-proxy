@@ -12,8 +12,8 @@ module CuandoPasa::Proxy
     attr_reader :value
 
     def initialize(attributes)
-      @value = attributes.fetch(:value)
-      @obtained_at = attributes.fetch(:obtained_at)
+      @value = attributes.fetch("value")
+      @obtained_at = attributes.fetch("obtained_at")
     end
 
     # Indicates if the session cookie should be used in a request.
@@ -21,6 +21,10 @@ module CuandoPasa::Proxy
     # session cookies (five minutes just seems good enough).
     def current?
       @obtained_at > Time.now - 5 * 60
+    end
+
+    def attributes
+      { "value" => @value, "obtained_at" => @obtained_at }
     end
 
     # This class is in charge for providing a current session cookie without
@@ -57,22 +61,27 @@ module CuandoPasa::Proxy
         res = Net::HTTP.get_response(URI('http://cuandopasa.efibus.com.ar'))
         value = res.to_hash.fetch('set-cookie').first.split(";").first
         obtained_at = Time.now
-        SessionCookie.new(value: value, obtained_at: obtained_at)
+        SessionCookie.new("value" => value, "obtained_at" => obtained_at)
       end
     end
 
     # This class is in charge for persisting the obtained session cookies and
     # retrieving it every time someone needs it.
     class Storage
+      def initialize(db = DB.get)
+        @db = db
+      end
+
       # Returns the most recent stored session cookie or nil (if no session
       # cookie was stored).
       def current
-        # TODO: implement.
+        document = @db.max("session_cookies", "obtained_at")
+        SessionCookie.new(document) unless document.nil?
       end
 
       # Stores a new session cookie for later retrieval.
       def store(session_cookie)
-        # TODO: implement.
+        @db.insert("session_cookies", session_cookie.attributes)
       end
     end
   end
