@@ -1,0 +1,19 @@
+<h2>Arribos para <%= params[:bus_stop_id] %></h2>
+
+<% if @arrivals.empty? %>
+  <p class="no_results">
+    No se encontró la información con los arribos de colectivos para esta
+    parada.
+  </p>
+<% else %>
+  <ul id="arrivals">
+    <% @arrivals.each do |arrival| %>
+      <li class="bus_line"><%= arrival[:line_bus_id]%></li>
+      <li class="message"><%= arrival[:message] %></li>
+    <% end %>
+  </ul>
+<% end %>
+<form id="arrivals_query" action="/arrivals" method="get">
+  <input type="hidden" name="bus_stop_id" value="<%= params[:bus_stop_id] %>">
+  <input type="submit" value="Actualizar">
+</form>
