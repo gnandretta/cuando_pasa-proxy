@@ -9,6 +9,11 @@ module CuandoPasa::Proxy
       Obtainer.new.obtain.each { |stop| db.insert("stops", stop) }
     end
 
+    # Finds in the database the stops who are near to the given location.
+    def self.near(location, db = DB.get)
+      db.near("stops", { "location" => location })
+    end
+
     # This class is in charge for obtaining the data for all the stops from the
     # "Cuando Pasa?" service.
     class Obtainer

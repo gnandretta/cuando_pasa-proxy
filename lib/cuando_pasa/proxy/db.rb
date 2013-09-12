@@ -65,6 +65,25 @@ module CuandoPasa::Proxy
         @db[coll].find
       end
 
+      # Returns the documents from the collection sorted by the closeness to a
+      # given location. The query argument also indicates the document's field
+      # that specifies the document's location.
+      #
+      # Before using this method a 2d index must be created. Also, keep in mind
+      # that MongoDB will return 100 documents at most.
+      #
+      # Example:
+      #
+      #   near("stops", "location" => [-60.711506, -31.657724])
+      #   # Returns up to 100 stops documents whose location specified in the
+      #   # "location" field are the closer to the point with long: -60.711506
+      #   # and lat: -31.657724.
+      def near(coll, query)
+        field = query.keys.first
+        location = query.values.first
+        @db[coll].find(field => { "$near" => location })
+      end
+
       # Drops the given collection.
       def drop(coll)
         @db[coll].drop
