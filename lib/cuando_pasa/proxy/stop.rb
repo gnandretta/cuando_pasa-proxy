@@ -82,7 +82,9 @@ module CuandoPasa::Proxy
         # rather keep this.
         if @collection.has_key?(stop["number"])
           if stop == @collection[stop["number"]].reject { |k, v| k == "bus_lines" }
-            @collection[stop["number"]]["bus_lines"] << bus_line_name
+            unless @collection[stop["number"]]["bus_lines"].include?(bus_line_name)
+              @collection[stop["number"]]["bus_lines"] << bus_line_name
+            end
           else
             raise "inconsistent stop #{stop}"
           end
