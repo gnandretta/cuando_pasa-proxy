@@ -3,3 +3,52 @@
   <input type="text" name="bus_stop_id" placeholder="Ingresá el número de la parada...">
   <input type="submit" value="¿Cuándo Pasa?">
 </form>
+
+<h3>Paradas cercanas</h3>
+<div id="near_stops">
+  <p>Buscando Tu Ubicación</p>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+  var element = document.getElementById("near_stops");
+
+  function updateElement(html) {
+    element.innerHTML = html;
+  }
+
+  function showMessage(error) {
+    var messages = {
+      currentPositionError: "No se pudo obtener la ubicación actual. Asegurate de que el GPS esté encendido.",
+      nearStopsError: "No se pudieron obtener las paradas cercanas.",
+      searching: "Buscando las paradas cercanas a tu ubicación...",
+      unsupported: "Tu navegador no soporta la funcionalidad que permite el acceso a la información de tu ubicación."
+    }
+    updateElement("<p>" + messages[error] + "</p>");
+  }
+
+  function showErrorGettingCurrentPosition(error) {
+    showMessage("currentPositionError");
+  }
+
+  function showNearStops(position) {
+    var r = new XMLHttpRequest();
+    var url = "/stops?location[]=" + position.coords.longitude + "&location[]=" + position.coords.latitude;
+    r.open("GET", url, true);
+    r.onreadystatechange = function() {
+      if (r.readyState != 4) return;
+      if (r.status != 200) {
+        element.innerHTML = "<p>" + messages["nearStopsError"] + "</p>";
+      } else {
+        element.innerHTML = r.responseText;
+      }
+    }
+    r.send();
+  }
+
+  if (navigator.geolocation) {
+    showMessage("searching");
+    navigator.geolocation.getCurrentPosition(showNearStops, showErrorGettingCurrentPosition);
+  } else {
+    showMessage("unsupported");
+  }
+</script>

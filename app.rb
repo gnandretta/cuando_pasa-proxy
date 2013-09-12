@@ -20,3 +20,8 @@ get '/arrivals' do
   @arrivals = Arrival.query(params[:bus_stop_id])
   erb :arrivals
 end
+
+get '/stops' do
+  @stops = Stop.near(params[:location].map(&:to_f)).limit(15)
+  erb :stops, layout: false
+end

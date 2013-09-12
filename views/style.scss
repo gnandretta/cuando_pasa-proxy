@@ -1,10 +1,13 @@
+$amethyst: #9b59b6;
 $asbestos: #7f8c8d;
 $clouds: #ecf0f1;
+$peter_river: #3498db;
 $silver: #bdc3c7;
 $turquoise: #1abc9c;
 $wet_asphalt: #34495e;
 $white: #fff;
 $white_alpha: rgba(255, 255, 255, 0.746094);
+
 
 @mixin border-box-sizing {
   -moz-box-sizing: border-box;
@@ -41,26 +44,68 @@ input[type="submit"] {
   background-color: $turquoise;
   color: $white_alpha; }
 
-ul#arrivals {
+ul {
   @include border-box-sizing;
-  margin: 0 0 20px;
+  margin: 0;
   padding: 0;
   list-style-type: none;
 
   li {
-    padding: 5px 10px;
+    padding: 5px 10px; }
+}
 
-    &.bus_line {
-      border-radius: 4px;
-      background-color: $clouds;
+ul#arrivals {
+  margin-bottom: 20px;
+
+  li.bus_line {
+    border-radius: 4px;
+    background-color: $clouds;
+    color: $wet_asphalt; }
+
+  li.message {
+    margin-bottom: 10px;
+    color: $asbestos; }}
+
+ul#stops li {
+  padding: 15px 0 12px;
+  text-transform:capitalize;
+  border-bottom: 1px solid #ccc;
+
+  .description {
+    margin-bottom: 5px;
+    a {
+      font-size: 16px;
+      font-weight: bold;
       color: $wet_asphalt; }
+  }
+  .data {
+    span {
+      display: inline-block;
+      padding: 3px 5px;
+      border-radius: 2px;
 
-    &.message {
-      margin-bottom: 10px;
-      color: $asbestos; }}}
+      &.stop {
+        background-color: $peter_river;
+        color: $white_alpha; }
 
-h2 {
-  margin: 0 0 15px;
-  font-size: 26px;
+      &.bus_line {
+        background-color: $amethyst;
+        color: $white_alpha; }}}}
+
+h2, h3 {
+  margin: 0;
   font-weight: bold;
   color: $wet_asphalt; }
+
+h2 {
+  font-size: 26px;
+  margin-bottom: 15px; }
+
+h3 {
+  font-size: 22px; }
+
+a {
+  text-decoration: none; }
+
+#arrivals_query {
+  margin-bottom: 20px; }

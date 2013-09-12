@@ -1,0 +1,15 @@
+<ul id="stops">
+  <% @stops.each do |stop| %>
+    <li onclick="javascript:location.href='/arrivals?bus_stop_id=<%= stop["number"] %>'">
+      <div class="description">
+        <%= stop["description"].downcase %>
+      </div>
+      <div class="data">
+        <span class="stop"><%= stop["number"]%></span>
+        <% stop["bus_lines"].each do |bus_line| %>
+          <span class="bus_line"><%= bus_line %></span>
+        <% end %>
+      </div>
+    </li>
+  <% end %>
+</ul>
