@@ -13,7 +13,7 @@ module CuandoPasa::Proxy
       attr_reader :uri, :attributes
 
       def initialize(bus_line_id)
-        @uri = URI(URI('http://cuandopasa.efibus.com.ar/Paginas/Paginas/Recorridos.aspx/RecuperarRecorrido'))
+        @uri = URI('http://cuandopasa.efibus.com.ar/Paginas/Paginas/Recorridos.aspx/RecuperarRecorrido')
         @attributes = { codigoLineaGrupo: bus_line_id }
       end
     end
