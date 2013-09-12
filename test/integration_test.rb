@@ -25,7 +25,7 @@ module CuandoPasa::Proxy
 
     def test_session_cookie_storage
       db = DB.get
-      db.drop("session_cookies")
+      db.remove("session_cookies")
       assert_equal 0, db.all("session_cookies").to_a.size
       SessionCookie::Provider.new.provide
       assert_equal 1, db.all("session_cookies").to_a.size

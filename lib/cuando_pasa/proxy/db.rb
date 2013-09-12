@@ -84,9 +84,9 @@ module CuandoPasa::Proxy
         @db[coll].find(field => { "$near" => location })
       end
 
-      # Drops the given collection.
-      def drop(coll)
-        @db[coll].drop
+      # Remove all the documents of a given collection.
+      def remove(coll)
+        @db[coll].remove
       end
     end
   end

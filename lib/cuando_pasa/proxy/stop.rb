@@ -5,7 +5,7 @@ module CuandoPasa::Proxy
     # system.
     def self.update_db(db = DB.get)
       # TODO: This is far from ideal, but we may get away with it.
-      db.drop("stops")
+      db.remove("stops")
       Obtainer.new.obtain.each { |stop| db.insert("stops", stop) }
     end
 
