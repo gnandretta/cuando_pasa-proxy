@@ -14,6 +14,7 @@ module CuandoPasa::Proxy
     end
 
     def test_querying_arrival
+      SessionCookie.refresh
       arrivals = Arrival.query("35174")
 
       assert !arrivals.empty?
@@ -26,14 +27,17 @@ module CuandoPasa::Proxy
     def test_session_cookie_storage
       db = DB.get
       db.remove("session_cookies")
+      assert_nil SessionCookie.current
       assert_equal 0, db.all("session_cookies").to_a.size
-      SessionCookie::Provider.new.provide
+      SessionCookie.refresh
+      assert_not_nil SessionCookie.current
       assert_equal 1, db.all("session_cookies").to_a.size
-      SessionCookie::Provider.new.provide
+      assert_not_nil SessionCookie.current
       assert_equal 1, db.all("session_cookies").to_a.size
     end
 
     def test_stop_storage
+      SessionCookie.refresh
       Stop.update_db
       assert DB.get.all("stops").to_a.size > 0
     end

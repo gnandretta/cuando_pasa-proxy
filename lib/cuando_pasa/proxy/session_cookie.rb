@@ -6,9 +6,26 @@ module CuandoPasa::Proxy
   # eventually expire.
   #
   # This class represents a session cookie and also provides a namespace for
-  # the classes who are responsible for providing them (Provider#provide is the
-  # entry point of that functionality).
+  # the classes who are responsible for providing them. It has also two
+  # shortcut methods (current and refresh) to perfrom the fundamental
+  # operations of this module.
   class SessionCookie
+    # Finds in the storage the most recent session cookie. Keep in mind that
+    # the returned session cookie might not be really current (valid) and it
+    # can even be nil.
+    #
+    # In order to prevent the previous scenarios, refresh must be called
+    # periodically.
+    def self.current
+      Storage.new.current
+    end
+
+    # Obtains a new session cookie and stores it in the database to feed the
+    # provider.
+    def self.refresh
+      Storage.new.store(Obtainer.new.obtain)
+    end
+
     attr_reader :value
 
     def initialize(attributes)
@@ -27,31 +44,6 @@ module CuandoPasa::Proxy
       { "value" => @value, "obtained_at" => @obtained_at }
     end
 
-    # This class is in charge for providing a current session cookie without
-    # resorting to make a new request every time the session cookie is needed.
-    # See #provide for more details.
-    class Provider
-      # In order to do it's job it needs two collaborators: a storage and a
-      # obtainer. See Storage and Obtainer for more details.
-      def initialize(collaborators = {})
-        @storage = collaborators[:storage] || Storage.new
-        @obtainer = collaborators[:obtainer] || Obtainer.new
-
-        @session_cookie = @storage.current
-      end
-
-      # Returns the most recent stored session cookie provided it is still
-      # current. Otherwise obtains, stores and returns a new one.
-      def provide
-        if @session_cookie.nil? || !@session_cookie.current?
-          @session_cookie = @obtainer.obtain
-          @storage.store(@session_cookie)
-        end
-
-        @session_cookie
-      end
-    end
-
     # This class is in charge for obtaining a new (and current) session cookie
     # from the "Cuando Pasa?" service.
     class Obtainer
@@ -66,7 +58,7 @@ module CuandoPasa::Proxy
     end
 
     # This class is in charge for persisting the obtained session cookies and
-    # retrieving it every time someone needs it.
+    # retrieving them every time someone needs it.
     class Storage
       def initialize(db = DB.get)
         @db = db

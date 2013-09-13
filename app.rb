@@ -6,6 +6,12 @@ include CuandoPasa::Proxy
 
 configure do
   DB.start(ENV.fetch("DATABASE_URL"))
+  Thread.new do
+    loop do
+      SessionCookie.refresh
+      sleep(5 * 60) # every 5 minutes
+    end
+  end
 end
 
 get '/style.css' do

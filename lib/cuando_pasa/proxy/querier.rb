@@ -12,7 +12,7 @@ module CuandoPasa::Proxy
     # In order to query the real system, a query object who respond to uri and
     # attributes is needed as well as a parser, who will transform the system's
     # response into a data structure that is easier to manipulate.
-    def initialize(query, parser, session_cookie_provider = SessionCookie::Provider.new)
+    def initialize(query, parser, session_cookie_provider = SessionCookie)
       @query = query
       @parser = parser
       @session_cookie_provider = session_cookie_provider
@@ -22,7 +22,7 @@ module CuandoPasa::Proxy
     def execute
       res = Net::HTTP.start(@query.uri.hostname, @query.uri.port) do |http|
         req = Net::HTTP::Post.new(@query.uri)
-        req['Cookie'] = @session_cookie_provider.provide.value
+        req['Cookie'] = @session_cookie_provider.current.value
         req['Content-Type'] = "application/json; charset=utf-8"
         req.body = build_body(@query.attributes)
 
