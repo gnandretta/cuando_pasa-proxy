@@ -1,1 +1,1 @@
-web: bundle exec rackup config.ru -Ilib -p $PORT
+web: bundle exec puma -t 0:5 -p $PORT -e ${RACK_ENV:-development} -Ilib
