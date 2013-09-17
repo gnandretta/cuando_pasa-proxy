@@ -23,7 +23,7 @@ get '/' do
 end
 
 get '/arrivals' do
-  @arrivals = Arrival.query(params[:bus_stop_id])
+  @arrivals = Arrival.query(params[:bus_stop_id].strip.to_i)
   erb :arrivals
 end
 
