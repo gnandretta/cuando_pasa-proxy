@@ -47,7 +47,7 @@
 
   if (navigator.geolocation) {
     showMessage("searching");
-    navigator.geolocation.getCurrentPosition(showNearStops, showErrorGettingCurrentPosition);
+    navigator.geolocation.getCurrentPosition(showNearStops, showErrorGettingCurrentPosition, { enableHighAccuracy: true });
   } else {
     showMessage("unsupported");
   }
