@@ -5,7 +5,9 @@
 
 ## ¿Cómo funciona?
 
-La aplicación actúa como una intermediaria entre el usuario y la web del sistema _cuando pasa?_. Al recibir una consulta de un usuario, la aplicación se la reenvía al _cuando pasa?_. Una vez que obtiene los resultados, se los comunica al usuario.
+La aplicación actúa como una intermediaria entre el usuario y la web del sistema _cuando pasa?_. Al recibir una consulta de un usuario, la aplicación se la reenvía al _cuándo pasa?_. Una vez que obtiene los resultados, se los comunica al usuario.
+
+Los resultados obtenidos son los mismos que se obtendrían manualmente de la web del _cuándo pasa?_, ingresando el número de parada y eligiendo _ver todas_ las líneas.
 
 
 ## ¿Por qué?
