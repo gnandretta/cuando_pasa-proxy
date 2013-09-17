@@ -75,9 +75,7 @@ ul#stops li {
     margin-bottom: 5px;
     a {
       font-size: 16px;
-      font-weight: bold;
-      color: $wet_asphalt; }
-  }
+      font-weight: bold; }}
   .data {
     span {
       display: inline-block;
@@ -105,7 +103,13 @@ h3 {
   font-size: 22px; }
 
 a {
+  color: $wet_asphalt;
   text-decoration: none; }
 
 #arrivals_query {
   margin-bottom: 20px; }
+
+#footer {
+  margin: 30px 0;
+  border-bottom: 1px solid $white;
+  text-align: center; }
