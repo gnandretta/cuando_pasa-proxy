@@ -18,8 +18,9 @@
 
   function showMessage(error) {
     var messages = {
-      currentPositionError: "No se pudo obtener la ubicación actual. Asegurate de que el GPS esté encendido.",
+      currentPositionError: "No se pudo obtener tu ubicación actual. Esto puede ser porque el GPS no está encendido.",
       nearStopsError: "No se pudieron obtener las paradas cercanas.",
+      obtainingLocation: "Consultando tu ubicación actual...",
       searching: "Buscando las paradas cercanas a tu ubicación...",
       unsupported: "Tu navegador no soporta la funcionalidad que permite el acceso a la información de tu ubicación."
     }
@@ -31,6 +32,7 @@
   }
 
   function showNearStops(position) {
+    showMessage("searching");
     var r = new XMLHttpRequest();
     var url = "/stops?location[]=" + position.coords.longitude + "&location[]=" + position.coords.latitude;
     r.open("GET", url, true);
@@ -46,7 +48,7 @@
   }
 
   if (navigator.geolocation) {
-    showMessage("searching");
+    showMessage("obtainingLocation");
     navigator.geolocation.getCurrentPosition(showNearStops, showErrorGettingCurrentPosition, { enableHighAccuracy: true });
   } else {
     showMessage("unsupported");
