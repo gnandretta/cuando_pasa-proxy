@@ -1,6 +1,6 @@
 # Cuándo Pasa? (Proxy)
 
-**Cuándo Pasa? (Proxy)** es una aplicación web que permite realizar consultas al sistema [cuándo pasa?](http://cuandopasa.efibus.com.ar/) desde dispositivos móviles a través de internet.
+**Cuándo Pasa? (Proxy)** es una aplicación web que permite realizar consultas al sistema [cuándo pasa?](http://cuandopasa.efibus.com.ar/) desde dispositivos móviles a través de internet. Podés usarla desde [http://cuando-pasa-proxy.herokuapp.com](http://cuando-pasa-proxy.herokuapp.com).
 
 
 ## ¿Cómo funciona?
